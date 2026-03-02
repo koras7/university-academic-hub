@@ -13,6 +13,7 @@ import com.example.academichub.model.User
 import com.example.academichub.model.UserRole
 import com.google.android.material.textfield.TextInputEditText
 import java.util.UUID
+import com.example.academichub.ui.student.StudentDashboardActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -80,11 +81,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToDashboard(role: UserRole) {
-        // For now, we'll just show a toast — dashboards come next!
-        android.widget.Toast.makeText(
-            this,
-            "Welcome! Logged in as ${role.name}",
-            android.widget.Toast.LENGTH_LONG
-        ).show()
+        val intent = when (role) {
+            UserRole.STUDENT -> Intent(this, StudentDashboardActivity::class.java)
+            UserRole.PEER_TUTOR -> Intent(this, StudentDashboardActivity::class.java)
+            UserRole.UNIVERSITY_TUTOR -> Intent(this, StudentDashboardActivity::class.java)
+            UserRole.PROFESSOR -> Intent(this, StudentDashboardActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
     }
 }

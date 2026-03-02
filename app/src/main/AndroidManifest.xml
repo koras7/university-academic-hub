@@ -22,6 +22,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Student Dashboard -->
+        <activity
+            android:name=".ui.student.StudentDashboardActivity"
+            android:exported="false"/>
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
