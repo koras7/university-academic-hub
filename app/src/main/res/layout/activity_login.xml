@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center">
+
+        <!-- Logo/Title Area -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Academic Hub"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect with tutors and academic support"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="48dp"/>
+
+        <!-- Email Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxStrokeColor="@color/primary"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/text_primary"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Role Selection -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_role"
+            android:textSize="16sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <RadioGroup
+            android:id="@+id/roleRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp">
+
+            <RadioButton
+                android:id="@+id/studentRadio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/role_student"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/tutorRadio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/role_tutor"
+                android:textSize="16sp"
+                android:padding="12dp"/>
+
+            <RadioButton
+                android:id="@+id/professorRadio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/role_professor"
+                android:textSize="16sp"
+                android:padding="12dp"/>
+
+        </RadioGroup>
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/continue_btn"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"/>
+
+        <!-- Error Message -->
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/error"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</ScrollView>
