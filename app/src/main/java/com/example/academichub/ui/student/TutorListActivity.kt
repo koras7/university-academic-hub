@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.academichub.R
 import com.example.academichub.data.MockData
 import com.example.academichub.model.TutorProfile
+import android.content.Intent
 
 class TutorListActivity : AppCompatActivity() {
 
@@ -44,10 +45,8 @@ class TutorListActivity : AppCompatActivity() {
     }
 
     private fun onTutorClicked(tutor: TutorProfile) {
-        android.widget.Toast.makeText(
-            this,
-            "Selected: ${tutor.name}",
-            android.widget.Toast.LENGTH_SHORT
-        ).show()
+        val intent = Intent(this, TutorProfileActivity::class.java)
+        intent.putExtra("TUTOR_ID", tutor.id)
+        startActivity(intent)
     }
 }

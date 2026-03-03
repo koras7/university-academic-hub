@@ -12,9 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AcademicHub">
         <activity
-            android:name=".ui.student.TutorListActivity"
+            android:name=".ui.student.TutorProfileActivity"
             android:exported="false" />
-        <!-- Login Screen - opens first -->
+        <activity
+            android:name=".ui.student.TutorListActivity"
+            android:exported="false" /> <!-- Login Screen - opens first -->
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">
@@ -23,12 +25,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- Student Dashboard -->
+        </activity> <!-- Student Dashboard -->
         <activity
             android:name=".ui.student.StudentDashboardActivity"
-            android:exported="false" />
-        <!-- Main Activity -->
+            android:exported="false" /> <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
