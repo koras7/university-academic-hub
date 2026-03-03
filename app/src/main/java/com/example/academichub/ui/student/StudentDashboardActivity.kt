@@ -34,11 +34,8 @@ class StudentDashboardActivity : AppCompatActivity() {
 
         // Find Tutors card click
         findTutorsCard.setOnClickListener {
-            android.widget.Toast.makeText(
-                this,
-                "Tutor list coming soon!",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, TutorListActivity::class.java)
+            startActivity(intent)
         }
 
         // My Requests card click
