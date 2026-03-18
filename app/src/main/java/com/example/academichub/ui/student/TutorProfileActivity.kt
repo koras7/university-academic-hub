@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.academichub.R
 import com.example.academichub.data.MockData
 import com.example.academichub.model.TutorType
+import android.content.Intent
 
 class TutorProfileActivity : AppCompatActivity() {
 
@@ -50,11 +51,9 @@ class TutorProfileActivity : AppCompatActivity() {
 
             // Request session button
             requestSessionButton.setOnClickListener {
-                android.widget.Toast.makeText(
-                    this,
-                    "Session request feature coming soon!",
-                    android.widget.Toast.LENGTH_SHORT
-                ).show()
+                val intent = Intent(this, SessionRequestActivity::class.java)
+                intent.putExtra("TUTOR_ID", tutor.id)
+                startActivity(intent)
             }
         }
     }

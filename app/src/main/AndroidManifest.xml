@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AcademicHub">
         <activity
+            android:name=".ui.student.SessionRequestActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.student.TutorProfileActivity"
             android:exported="false" />
         <activity

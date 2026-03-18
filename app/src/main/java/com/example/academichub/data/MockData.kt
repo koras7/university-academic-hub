@@ -8,7 +8,7 @@ object MockData {
         TutorProfile(
             id = "t1",
             userId = "u2",
-            name = "Sarah Chen",
+            name = "Sara",
             type = TutorType.PEER,
             subjects = listOf("Mathematics", "Physics"),
             courses = listOf("MATH 201", "PHYS 101", "MATH 301"),
@@ -18,7 +18,7 @@ object MockData {
         TutorProfile(
             id = "t2",
             userId = "u3",
-            name = "Michael Rodriguez",
+            name = "Michael",
             type = TutorType.PEER,
             subjects = listOf("Computer Science", "Programming"),
             courses = listOf("CS 101", "CS 201", "CS 3318"),
@@ -29,7 +29,7 @@ object MockData {
         TutorProfile(
             id = "t3",
             userId = "u4",
-            name = "Dr. Emily Watson",
+            name = " Emily ",
             type = TutorType.UNIVERSITY,
             subjects = listOf("Biology", "Chemistry"),
             courses = listOf("BIOL 101", "CHEM 101"),
@@ -39,7 +39,7 @@ object MockData {
         TutorProfile(
             id = "t4",
             userId = "u5",
-            name = "James Park",
+            name = "James ",
             type = TutorType.PEER,
             subjects = listOf("Economics", "Statistics"),
             courses = listOf("ECON 201", "STAT 200"),
