@@ -14,6 +14,7 @@ import com.example.academichub.model.UserRole
 import com.google.android.material.textfield.TextInputEditText
 import java.util.UUID
 import com.example.academichub.ui.student.StudentDashboardActivity
+import com.example.academichub.ui.tutor.TutorDashboardActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -83,8 +84,8 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToDashboard(role: UserRole) {
         val intent = when (role) {
             UserRole.STUDENT -> Intent(this, StudentDashboardActivity::class.java)
-            UserRole.PEER_TUTOR -> Intent(this, StudentDashboardActivity::class.java)
-            UserRole.UNIVERSITY_TUTOR -> Intent(this, StudentDashboardActivity::class.java)
+            UserRole.PEER_TUTOR -> Intent(this, TutorDashboardActivity::class.java)
+            UserRole.UNIVERSITY_TUTOR -> Intent(this, TutorDashboardActivity::class.java)
             UserRole.PROFESSOR -> Intent(this, StudentDashboardActivity::class.java)
         }
         startActivity(intent)

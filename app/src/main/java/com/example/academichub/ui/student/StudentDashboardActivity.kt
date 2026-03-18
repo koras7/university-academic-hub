@@ -8,12 +8,16 @@ import androidx.cardview.widget.CardView
 import com.example.academichub.R
 import com.example.academichub.data.MockData
 
+
 class StudentDashboardActivity : AppCompatActivity() {
 
     private lateinit var welcomeText: TextView
     private lateinit var userNameText: TextView
     private lateinit var findTutorsCard: CardView
     private lateinit var myRequestsCard: CardView
+
+    private lateinit var logoutButton: android.widget.Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,15 @@ class StudentDashboardActivity : AppCompatActivity() {
         userNameText = findViewById(R.id.userNameText)
         findTutorsCard = findViewById(R.id.findTutorsCard)
         myRequestsCard = findViewById(R.id.myRequestsCard)
+
+        logoutButton = findViewById(R.id.logoutButton)
+
+        logoutButton.setOnClickListener {
+            val intent = Intent(this, com.example.academichub.ui.LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+        }
 
         // Show the logged in user's name
         val currentUser = MockData.currentUser
