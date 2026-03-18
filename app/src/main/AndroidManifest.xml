@@ -47,6 +47,11 @@
             android:name=".ui.tutor.TutorDashboardActivity"
             android:exported="false"/>
 
+        <!-- Professor Directory -->
+        <activity
+            android:name=".ui.professor.ProfessorDirectoryActivity"
+            android:exported="false"/>
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"

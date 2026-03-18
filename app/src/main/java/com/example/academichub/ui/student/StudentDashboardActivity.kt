@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.academichub.R
 import com.example.academichub.data.MockData
+import com.example.academichub.ui.professor.ProfessorDirectoryActivity
 
 
 class StudentDashboardActivity : AppCompatActivity() {
@@ -16,6 +17,7 @@ class StudentDashboardActivity : AppCompatActivity() {
     private lateinit var findTutorsCard: CardView
     private lateinit var myRequestsCard: CardView
 
+    private lateinit var professorDirectoryCard: androidx.cardview.widget.CardView
     private lateinit var logoutButton: android.widget.Button
 
 
@@ -28,6 +30,13 @@ class StudentDashboardActivity : AppCompatActivity() {
         userNameText = findViewById(R.id.userNameText)
         findTutorsCard = findViewById(R.id.findTutorsCard)
         myRequestsCard = findViewById(R.id.myRequestsCard)
+
+        professorDirectoryCard = findViewById(R.id.professorDirectoryCard)
+
+        professorDirectoryCard.setOnClickListener {
+            val intent = Intent(this, ProfessorDirectoryActivity::class.java)
+            startActivity(intent)
+        }
 
         logoutButton = findViewById(R.id.logoutButton)
 
