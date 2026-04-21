@@ -10,7 +10,7 @@ import com.example.academichub.model.TutorProfile
 import com.example.academichub.model.TutorType
 
 class TutorAdapter(
-    private val tutors: List<TutorProfile>,
+    private val tutors: MutableList<TutorProfile>,
     private val onTutorClick: (TutorProfile) -> Unit
 ) : RecyclerView.Adapter<TutorAdapter.TutorViewHolder>() {
 
@@ -66,4 +66,10 @@ class TutorAdapter(
 
     // Total number of tutors
     override fun getItemCount(): Int = tutors.size
+
+    fun updateTutors(newTutors: List<TutorProfile>) {
+        (tutors as MutableList).clear()
+        (tutors as MutableList).addAll(newTutors)
+        notifyDataSetChanged()
+    }
 }
