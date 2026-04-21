@@ -85,7 +85,11 @@ class SessionRequestActivity : AppCompatActivity() {
             status = RequestStatus.PENDING
         )
 
-        // Save to MockData
+        // Save to Room Database
+        val repository = (application as com.example.academichub.AcademicHubApplication).repository
+        repository.insertSessionRequest(request)
+
+        // Also keep in MockData for current session display
         MockData.sessionRequests.add(request)
 
         // Hide error if visible
