@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AcademicHub">
         <activity
+            android:name=".ui.student.BrowseSessionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.tutor.PostSessionActivity"
             android:exported="false" />
         <activity

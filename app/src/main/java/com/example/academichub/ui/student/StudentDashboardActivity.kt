@@ -17,6 +17,8 @@ class StudentDashboardActivity : AppCompatActivity() {
     private lateinit var findTutorsCard: CardView
     private lateinit var myRequestsCard: CardView
 
+    private lateinit var browseSessionsCard: androidx.cardview.widget.CardView
+
     private lateinit var professorDirectoryCard: androidx.cardview.widget.CardView
     private lateinit var logoutButton: android.widget.Button
 
@@ -35,6 +37,13 @@ class StudentDashboardActivity : AppCompatActivity() {
 
         professorDirectoryCard.setOnClickListener {
             val intent = Intent(this, ProfessorDirectoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        browseSessionsCard = findViewById(R.id.browseSessionsCard)
+
+        browseSessionsCard.setOnClickListener {
+            val intent = Intent(this, BrowseSessionsActivity::class.java)
             startActivity(intent)
         }
 
