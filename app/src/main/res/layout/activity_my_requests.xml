@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:orientation="vertical">
 
     <!-- Top Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/primary"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:text="My Requests"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -29,19 +29,19 @@
         android:id="@+id/emptyStateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="You haven't made any requests yet!"
-        android:textSize="16sp"
-        android:textColor="@color/text_secondary"
         android:gravity="center"
         android:padding="32dp"
-        android:visibility="gone"/>
+        android:text="You haven't made any requests yet!"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <!-- Requests RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myRequestsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="8dp"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:paddingTop="8dp" />
 
 </LinearLayout>

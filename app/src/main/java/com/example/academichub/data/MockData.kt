@@ -1,6 +1,7 @@
 package com.example.academichub.data
 
 import com.example.academichub.model.*
+import com.example.academichub.model.TutoringSession
 
 object MockData {
 
@@ -94,4 +95,7 @@ object MockData {
 
     // Current logged-in user (will be set at login)
     var currentUser: User? = null
+
+    // Mutable list to store posted tutoring sessions
+    val tutoringSessions = mutableListOf<TutoringSession>()
 }

@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AcademicHub">
         <activity
-            android:name=".ui.student.MyRequestsActivity"
+            android:name=".ui.tutor.PostSessionActivity"
             android:exported="false" />
-        <!-- Login Screen - opens first -->
+        <activity
+            android:name=".ui.student.MyRequestsActivity"
+            android:exported="false" /> <!-- Login Screen - opens first -->
         <activity
             android:name=".ui.LoginActivity"
             android:exported="true">

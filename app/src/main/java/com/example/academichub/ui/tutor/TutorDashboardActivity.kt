@@ -21,6 +21,8 @@ class TutorDashboardActivity : AppCompatActivity() {
     private lateinit var requestAdapter: RequestAdapter
     private lateinit var logoutButton: android.widget.Button
 
+    private lateinit var postSessionButton: android.widget.Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutor_dashboard)
@@ -37,6 +39,12 @@ class TutorDashboardActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        postSessionButton = findViewById(R.id.postSessionButton)
+
+        postSessionButton.setOnClickListener {
+            val intent = Intent(this, PostSessionActivity::class.java)
+            startActivity(intent) }
 
         // Show logged in tutor's name
         val currentUser = MockData.currentUser
