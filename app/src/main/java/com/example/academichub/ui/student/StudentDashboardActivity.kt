@@ -61,12 +61,10 @@ class StudentDashboardActivity : AppCompatActivity() {
         }
 
         // My Requests card click
+
         myRequestsCard.setOnClickListener {
-            android.widget.Toast.makeText(
-                this,
-                "Requests coming soon!",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, MyRequestsActivity::class.java)
+            startActivity(intent)
         }
     }
 }
