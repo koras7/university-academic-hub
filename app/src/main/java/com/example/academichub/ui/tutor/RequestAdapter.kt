@@ -87,4 +87,10 @@ class RequestAdapter(
     }
 
     override fun getItemCount(): Int = requests.size
+
+    fun updateRequests(newRequests: List<SessionRequest>) {
+        requests.clear()
+        requests.addAll(newRequests)
+        notifyDataSetChanged()
+    }
 }

@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.academichub.AcademicHubApplication
 import com.example.academichub.R
 import com.example.academichub.data.MockData
-import com.example.academichub.model.RequestStatus
 import com.example.academichub.model.SessionRequest
+import com.example.academichub.viewmodel.TutorDashboardViewModel
 
 class TutorDashboardActivity : AppCompatActivity() {
 
@@ -22,6 +22,8 @@ class TutorDashboardActivity : AppCompatActivity() {
     private lateinit var logoutButton: android.widget.Button
 
     private lateinit var postSessionButton: android.widget.Button
+
+    private lateinit var viewModel: TutorDashboardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,80 +54,56 @@ class TutorDashboardActivity : AppCompatActivity() {
             tutorNameText.text = currentUser.name
         }
 
-        // Setup the requests list
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        )[TutorDashboardViewModel::class.java]
+
         setupRequestsList()
+        observeViewModel()
+
+        viewModel.loadRequests()
     }
 
     private fun setupRequestsList() {
-        // Load from Room Database instead of MockData
-        val repository = (application as AcademicHubApplication).repository
-        val dbRequests = repository.getAllSessionRequests()
-
-        // Also sync with MockData for current session
-        MockData.sessionRequests.clear()
-        MockData.sessionRequests.addAll(dbRequests)
-
-        val requests = MockData.sessionRequests
-
-        // Show empty state if no requests
-        if (requests.isEmpty()) {
-            emptyStateText.visibility = View.VISIBLE
-            requestsRecyclerView.visibility = View.GONE
-            return
-        }
-
-        emptyStateText.visibility = View.GONE
-        requestsRecyclerView.visibility = View.VISIBLE
-
-        // Create adapter
         requestAdapter = RequestAdapter(
-            requests,
+            mutableListOf(),
             onAccept = { request -> handleAccept(request) },
             onReject = { request -> handleReject(request) }
         )
 
-        // Setup RecyclerView
         requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         requestsRecyclerView.adapter = requestAdapter
     }
 
-    private fun handleAccept(request: SessionRequest) {
-        val index = MockData.sessionRequests.indexOfFirst { it.id == request.id }
-        if (index != -1) {
-            MockData.sessionRequests[index] = request.copy(
-                status = RequestStatus.ACCEPTED
-            )
-            requestAdapter.notifyItemChanged(index)
-
-            // Save to Room Database
-            val repository = (application as AcademicHubApplication).repository
-            repository.updateRequestStatus(request.id, RequestStatus.ACCEPTED)
-
-            android.widget.Toast.makeText(
-                this,
-                "Request from ${request.studentName} accepted!",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
+    private fun observeViewModel() {
+        viewModel.requests.observe(this) { requests ->
+            if (requests.isEmpty()) {
+                emptyStateText.visibility = View.VISIBLE
+                requestsRecyclerView.visibility = View.GONE
+            } else {
+                emptyStateText.visibility = View.GONE
+                requestsRecyclerView.visibility = View.VISIBLE
+            }
+            requestAdapter.updateRequests(requests)
         }
     }
 
+    private fun handleAccept(request: SessionRequest) {
+        viewModel.acceptRequest(request)
+        android.widget.Toast.makeText(
+            this,
+            "Request from ${request.studentName} accepted!",
+            android.widget.Toast.LENGTH_SHORT
+        ).show()
+    }
+
     private fun handleReject(request: SessionRequest) {
-        val index = MockData.sessionRequests.indexOfFirst { it.id == request.id }
-        if (index != -1) {
-            MockData.sessionRequests[index] = request.copy(
-                status = RequestStatus.REJECTED
-            )
-            requestAdapter.notifyItemChanged(index)
-
-            // Save to Room Database
-            val repository = (application as AcademicHubApplication).repository
-            repository.updateRequestStatus(request.id, RequestStatus.REJECTED)
-
-            android.widget.Toast.makeText(
-                this,
-                "Request from ${request.studentName} rejected.",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
-        }
+        viewModel.rejectRequest(request)
+        android.widget.Toast.makeText(
+            this,
+            "Request from ${request.studentName} rejected.",
+            android.widget.Toast.LENGTH_SHORT
+        ).show()
     }
 }
