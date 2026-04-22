@@ -10,8 +10,14 @@ import com.example.academichub.model.RequestStatus
 import com.example.academichub.model.SessionRequest
 
 class MyRequestsAdapter(
-    private val requests: List<SessionRequest>
+    private val requests: MutableList<SessionRequest>
 ) : RecyclerView.Adapter<MyRequestsAdapter.MyRequestViewHolder>() {
+
+    fun updateRequests(newRequests: List<SessionRequest>) {
+        requests.clear()
+        requests.addAll(newRequests)
+        notifyDataSetChanged()
+    }
 
     class MyRequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tutorNameText: TextView = itemView.findViewById(R.id.tutorNameText)

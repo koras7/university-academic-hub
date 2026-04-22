@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.academichub.R
 import com.example.academichub.data.MockData
-import com.example.academichub.model.RequestStatus
-import com.example.academichub.model.SessionRequest
+import com.example.academichub.viewmodel.SessionRequestViewModel
 import com.google.android.material.textfield.TextInputEditText
-import java.util.UUID
 
 class SessionRequestActivity : AppCompatActivity() {
 
@@ -20,6 +20,7 @@ class SessionRequestActivity : AppCompatActivity() {
     private lateinit var noteInput: TextInputEditText
     private lateinit var submitRequestButton: Button
     private lateinit var requestErrorText: TextView
+    private lateinit var viewModel: SessionRequestViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,11 @@ class SessionRequestActivity : AppCompatActivity() {
         submitRequestButton = findViewById(R.id.submitRequestButton)
         requestErrorText = findViewById(R.id.requestErrorText)
 
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        )[SessionRequestViewModel::class.java]
+
         // Get tutor ID passed from TutorProfileActivity
         val tutorId = intent.getStringExtra("TUTOR_ID")
         val tutor = MockData.tutors.find { it.id == tutorId }
@@ -42,9 +48,31 @@ class SessionRequestActivity : AppCompatActivity() {
             tutorNameText.text = tutor.name
         }
 
+        observeViewModel()
+
         // Submit button click
         submitRequestButton.setOnClickListener {
             handleSubmit(tutorId, tutor?.name)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.submitResult.observe(this) { result ->
+            when (result) {
+                is SessionRequestViewModel.SubmitResult.Success -> {
+                    MockData.sessionRequests.add(result.request)
+                    requestErrorText.visibility = View.GONE
+                    Toast.makeText(
+                        this,
+                        "Request sent to ${result.request.tutorName}!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    finish()
+                }
+                is SessionRequestViewModel.SubmitResult.Error -> {
+                    showError(result.message)
+                }
+            }
         }
     }
 
@@ -72,38 +100,15 @@ class SessionRequestActivity : AppCompatActivity() {
             return
         }
 
-        // Create the session request
-        val request = SessionRequest(
-            id = UUID.randomUUID().toString(),
+        viewModel.submitRequest(
             studentId = currentUser.id,
             studentName = currentUser.name,
             tutorId = tutorId,
             tutorName = tutorName,
             subject = subject,
             preferredTime = time,
-            note = note,
-            status = RequestStatus.PENDING
+            note = note
         )
-
-        // Save to Room Database
-        val repository = (application as com.example.academichub.AcademicHubApplication).repository
-        repository.insertSessionRequest(request)
-
-        // Also keep in MockData for current session display
-        MockData.sessionRequests.add(request)
-
-        // Hide error if visible
-        requestErrorText.visibility = View.GONE
-
-        // Show success and go back
-        android.widget.Toast.makeText(
-            this,
-            "Request sent to ${tutorName}!",
-            android.widget.Toast.LENGTH_LONG
-        ).show()
-
-        // Go back to tutor profile
-        finish()
     }
 
     private fun showError(message: String) {

@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.academichub.AcademicHubApplication
 import com.example.academichub.R
-import com.example.academichub.data.MockData
+import com.example.academichub.viewmodel.MyRequestsViewModel
 
 class MyRequestsActivity : AppCompatActivity() {
 
     private lateinit var myRequestsRecyclerView: RecyclerView
     private lateinit var emptyStateText: TextView
     private lateinit var myRequestsAdapter: MyRequestsAdapter
+    private lateinit var viewModel: MyRequestsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,29 +24,33 @@ class MyRequestsActivity : AppCompatActivity() {
         myRequestsRecyclerView = findViewById(R.id.myRequestsRecyclerView)
         emptyStateText = findViewById(R.id.emptyStateText)
 
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        )[MyRequestsViewModel::class.java]
+
         setupRequestsList()
+        observeViewModel()
+
+        viewModel.loadRequests()
     }
 
     private fun setupRequestsList() {
-        val currentUser = MockData.currentUser
-
-        // Load from Room Database
-        val repository = (application as AcademicHubApplication).repository
-        val allRequests = repository.getAllSessionRequests()
-
-        val myRequests = allRequests
-
-        if (myRequests.isEmpty()) {
-            emptyStateText.visibility = View.VISIBLE
-            myRequestsRecyclerView.visibility = View.GONE
-            return
-        }
-
-        emptyStateText.visibility = View.GONE
-        myRequestsRecyclerView.visibility = View.VISIBLE
-
-        myRequestsAdapter = MyRequestsAdapter(myRequests)
+        myRequestsAdapter = MyRequestsAdapter(mutableListOf())
         myRequestsRecyclerView.layoutManager = LinearLayoutManager(this)
         myRequestsRecyclerView.adapter = myRequestsAdapter
+    }
+
+    private fun observeViewModel() {
+        viewModel.requests.observe(this) { requests ->
+            if (requests.isEmpty()) {
+                emptyStateText.visibility = View.VISIBLE
+                myRequestsRecyclerView.visibility = View.GONE
+            } else {
+                emptyStateText.visibility = View.GONE
+                myRequestsRecyclerView.visibility = View.VISIBLE
+                myRequestsAdapter.updateRequests(requests)
+            }
+        }
     }
 }
