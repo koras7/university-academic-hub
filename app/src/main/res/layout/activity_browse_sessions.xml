@@ -5,36 +5,26 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Top Bar -->
+    <!-- Indigo Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/primary"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:background="#3D3580"
+        android:paddingTop="52dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Available Sessions"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"/>
 
     </LinearLayout>
-
-    <!-- Empty State -->
-    <TextView
-        android:id="@+id/emptySessionsText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No sessions posted yet!"
-        android:textSize="16sp"
-        android:textColor="@color/text_secondary"
-        android:gravity="center"
-        android:padding="32dp"
-        android:visibility="gone"/>
 
     <!-- Sessions Count -->
     <TextView
@@ -44,6 +34,42 @@
         android:padding="16dp"
         android:textSize="14sp"
         android:textColor="@color/text_secondary"/>
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/emptySessionsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="40dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📅"
+            android:textSize="64sp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No sessions posted yet"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check back later or ask your tutor to post one"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center" />
+
+    </LinearLayout>
 
     <!-- Sessions RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView

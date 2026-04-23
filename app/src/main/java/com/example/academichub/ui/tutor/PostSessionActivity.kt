@@ -2,7 +2,6 @@ package com.example.academichub.ui.tutor
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +21,7 @@ class PostSessionActivity : AppCompatActivity() {
     private lateinit var isPaidSwitch: Switch
     private lateinit var rateInputLayout: TextInputLayout
     private lateinit var sessionRateInput: TextInputEditText
-    private lateinit var postSessionButton: Button
+    private lateinit var postSessionButton: TextView
     private lateinit var postErrorText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {

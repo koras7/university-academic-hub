@@ -2,7 +2,6 @@ package com.example.academichub.ui.student
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,7 @@ class SessionRequestActivity : AppCompatActivity() {
     private lateinit var subjectInput: TextInputEditText
     private lateinit var timeInput: TextInputEditText
     private lateinit var noteInput: TextInputEditText
-    private lateinit var submitRequestButton: Button
+    private lateinit var submitRequestButton: TextView
     private lateinit var requestErrorText: TextView
     private lateinit var viewModel: SessionRequestViewModel
 

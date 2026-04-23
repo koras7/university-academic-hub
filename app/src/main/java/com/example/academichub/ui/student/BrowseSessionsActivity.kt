@@ -12,7 +12,7 @@ import com.example.academichub.data.MockData
 class BrowseSessionsActivity : AppCompatActivity() {
 
     private lateinit var sessionsRecyclerView: RecyclerView
-    private lateinit var emptySessionsText: TextView
+    private lateinit var emptySessionsText: View
     private lateinit var sessionsCountText: TextView
     private lateinit var sessionsAdapter: SessionsAdapter
 

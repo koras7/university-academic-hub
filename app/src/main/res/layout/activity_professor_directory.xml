@@ -5,22 +5,32 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Top Bar -->
+    <!-- Indigo Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/professor_badge"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:background="#3D3580"
+        android:paddingTop="52dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Professor Directory"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Faculty office hours"
+            android:textSize="14sp"
+            android:textColor="#C9C4E8"
+            android:layout_marginTop="4dp" />
 
     </LinearLayout>
 
