@@ -1,6 +1,7 @@
 package com.example.academichub.ui.student
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.academichub.R
 import com.example.academichub.data.MockData
 import com.example.academichub.database.AcademicRepository
@@ -31,12 +33,14 @@ class TutorProfileActivity : AppCompatActivity() {
     private lateinit var profileRatingSummary: TextView
     private lateinit var requestSessionButton: Button
     private lateinit var rateButton: TextView
+    private lateinit var favoriteButton: TextView
 
     private lateinit var repository: AcademicRepository
     private val executor = Executors.newSingleThreadExecutor()
     private val mainHandler = Handler(Looper.getMainLooper())
 
     private var tutorId: String? = null
+    private var isFavorited: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,7 @@ class TutorProfileActivity : AppCompatActivity() {
         profileRatingSummary = findViewById(R.id.profileRatingSummary)
         requestSessionButton = findViewById(R.id.requestSessionButton)
         rateButton = findViewById(R.id.rateButton)
+        favoriteButton = findViewById(R.id.favoriteButton)
 
         repository = AcademicRepository(applicationContext)
 
@@ -76,12 +81,61 @@ class TutorProfileActivity : AppCompatActivity() {
             rateButton.setOnClickListener {
                 showRatingDialog(tutor.id)
             }
+
+            favoriteButton.setOnClickListener {
+                toggleFavorite(tutor.id)
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        tutorId?.let { refreshRatings(it) }
+        tutorId?.let {
+            refreshRatings(it)
+            refreshFavoriteStatus(it)
+        }
+    }
+
+    private fun refreshFavoriteStatus(tutorId: String) {
+        val currentUser = MockData.currentUser ?: return
+        executor.execute {
+            val favorited = repository.isFavorite(tutorId, currentUser.id)
+            mainHandler.post {
+                isFavorited = favorited
+                updateFavoriteIcon()
+            }
+        }
+    }
+
+    private fun updateFavoriteIcon() {
+        if (isFavorited) {
+            favoriteButton.text = "♥"
+            favoriteButton.setTextColor(ContextCompat.getColor(this, R.color.red_error))
+        } else {
+            favoriteButton.text = "♡"
+            favoriteButton.setTextColor(Color.WHITE)
+        }
+    }
+
+    private fun toggleFavorite(tutorId: String) {
+        val currentUser = MockData.currentUser ?: return
+        val wasFavorited = isFavorited
+        executor.execute {
+            if (wasFavorited) {
+                repository.removeFavorite(tutorId, currentUser.id)
+            } else {
+                repository.addFavorite(tutorId, currentUser.id)
+            }
+            mainHandler.post {
+                isFavorited = !wasFavorited
+                updateFavoriteIcon()
+                Toast.makeText(
+                    this,
+                    if (isFavorited) "Added to favorites" else "Removed from favorites",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun refreshRatings(tutorId: String) {

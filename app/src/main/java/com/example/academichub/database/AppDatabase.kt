@@ -12,9 +12,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
         UserEntity::class,
         TutorEntity::class,
         SessionRequestEntity::class,
-        RatingEntity::class
+        RatingEntity::class,
+        FavoriteEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -22,6 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun tutorDao(): TutorDao
     abstract fun sessionRequestDao(): SessionRequestDao
     abstract fun ratingDao(): RatingDao
+    abstract fun favoriteDao(): FavoriteDao
 
     companion object {
         @Volatile
@@ -41,6 +43,18 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `favorites` (" +
+                        "`id` TEXT NOT NULL, " +
+                        "`tutorId` TEXT NOT NULL, " +
+                        "`studentId` TEXT NOT NULL, " +
+                        "PRIMARY KEY(`id`))"
+                )
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -48,7 +62,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "academic_hub_database"
                 )
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance

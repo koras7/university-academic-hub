@@ -38,6 +38,9 @@
             android:exported="false" /> <!-- Tutor Profile -->
         <activity
             android:name=".ui.student.TutorProfileActivity"
+            android:exported="false" /> <!-- Favorite Tutors -->
+        <activity
+            android:name=".ui.student.FavoriteTutorsActivity"
             android:exported="false" /> <!-- Session Request -->
         <activity
             android:name=".ui.student.SessionRequestActivity"

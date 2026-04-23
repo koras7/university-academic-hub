@@ -331,12 +331,15 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Filler: Saved (indigo light) -->
+            <!-- Saved (indigo light) -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/savedCard"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
                 android:layout_weight="1"
                 android:layout_marginStart="6dp"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/indigo_light_bg">

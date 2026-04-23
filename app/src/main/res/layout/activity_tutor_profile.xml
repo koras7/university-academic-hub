@@ -22,6 +22,18 @@
             android:paddingStart="24dp"
             android:paddingEnd="24dp">
 
+            <!-- Favorite / Bookmark heart -->
+            <TextView
+                android:id="@+id/favoriteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="♡"
+                android:textSize="28sp"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:focusable="true" />
+
             <!-- Yellow avatar circle -->
             <FrameLayout
                 android:layout_width="88dp"

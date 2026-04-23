@@ -5,6 +5,7 @@ import com.example.academichub.model.RequestStatus
 import com.example.academichub.model.SessionRequest
 import com.example.academichub.model.TutorProfile
 import com.example.academichub.model.TutorType
+import java.util.UUID
 
 class AcademicRepository(context: Context) {
 
@@ -12,6 +13,7 @@ class AcademicRepository(context: Context) {
     private val tutorDao = database.tutorDao()
     private val sessionRequestDao = database.sessionRequestDao()
     private val ratingDao = database.ratingDao()
+    private val favoriteDao = database.favoriteDao()
 
     // TUTOR FUNCTIONS
     fun getAllTutors(): List<TutorProfile> {
@@ -140,5 +142,30 @@ class AcademicRepository(context: Context) {
         val ratings = ratingDao.getRatingsForTutor(tutorId)
         if (ratings.isEmpty()) return 0f
         return ratings.map { it.rating }.average().toFloat()
+    }
+
+    // FAVORITE FUNCTIONS
+    fun addFavorite(tutorId: String, studentId: String) {
+        favoriteDao.insertFavorite(
+            FavoriteEntity(
+                id = UUID.randomUUID().toString(),
+                tutorId = tutorId,
+                studentId = studentId
+            )
+        )
+    }
+
+    fun removeFavorite(tutorId: String, studentId: String) {
+        favoriteDao.deleteFavorite(tutorId, studentId)
+    }
+
+    fun isFavorite(tutorId: String, studentId: String): Boolean {
+        return favoriteDao.isFavorite(tutorId, studentId)
+    }
+
+    fun getFavoriteTutors(studentId: String): List<TutorProfile> {
+        return favoriteDao.getFavoritesForStudent(studentId).mapNotNull { favorite ->
+            getTutorById(favorite.tutorId)
+        }
     }
 }
