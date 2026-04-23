@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -12,13 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.academichub.R
 import com.example.academichub.model.TutorProfile
 import com.example.academichub.viewmodel.TutorListViewModel
-import com.google.android.material.textfield.TextInputEditText
 
 class TutorListActivity : AppCompatActivity() {
 
     private lateinit var tutorRecyclerView: RecyclerView
     private lateinit var tutorCountText: TextView
-    private lateinit var searchInput: TextInputEditText
+    private lateinit var searchInput: EditText
     private lateinit var tutorAdapter: TutorAdapter
     private lateinit var viewModel: TutorListViewModel
 

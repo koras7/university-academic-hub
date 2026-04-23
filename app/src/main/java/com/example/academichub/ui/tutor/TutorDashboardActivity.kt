@@ -19,9 +19,9 @@ class TutorDashboardActivity : AppCompatActivity() {
     private lateinit var tutorNameText: TextView
     private lateinit var emptyStateText: TextView
     private lateinit var requestAdapter: RequestAdapter
-    private lateinit var logoutButton: android.widget.Button
+    private lateinit var logoutButton: android.widget.TextView
 
-    private lateinit var postSessionButton: android.widget.Button
+    private lateinit var postSessionButton: android.widget.TextView
 
     private lateinit var viewModel: TutorDashboardViewModel
 

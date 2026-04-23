@@ -21,6 +21,7 @@ class TutorAdapter(
         val tutorSubjects: TextView = itemView.findViewById(R.id.tutorSubjects)
         val tutorAvailability: TextView = itemView.findViewById(R.id.tutorAvailability)
         val tutorRate: TextView = itemView.findViewById(R.id.tutorRate)
+        val tutorInitial: TextView = itemView.findViewById(R.id.tutorInitial)
     }
 
     // Creates a new card view
@@ -37,25 +38,26 @@ class TutorAdapter(
         holder.tutorName.text = tutor.name
         holder.tutorSubjects.text = "📚 ${tutor.subjects.joinToString(", ")}"
         holder.tutorAvailability.text = "🕐 ${tutor.availability}"
+        holder.tutorInitial.text = tutor.name.first().uppercaseChar().toString()
 
         // Show tutor type badge
         if (tutor.type == TutorType.UNIVERSITY) {
             holder.tutorType.text = "University"
-            holder.tutorType.setBackgroundColor(
-                holder.itemView.context.getColor(com.example.academichub.R.color.professor_badge)
-            )
         } else {
             holder.tutorType.text = "Peer"
-            holder.tutorType.setBackgroundColor(
-                holder.itemView.context.getColor(com.example.academichub.R.color.tutor_badge)
-            )
         }
 
         // Show rate or free
         if (tutor.isPaid && tutor.rate != null) {
             holder.tutorRate.text = "💰 ${tutor.rate}"
+            holder.tutorRate.setTextColor(
+                holder.itemView.context.getColor(R.color.paid_color)
+            )
         } else {
             holder.tutorRate.text = "✅ Free"
+            holder.tutorRate.setTextColor(
+                holder.itemView.context.getColor(R.color.free_color)
+            )
         }
 
         // Handle click on the card

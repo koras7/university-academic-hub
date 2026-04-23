@@ -20,7 +20,7 @@ class StudentDashboardActivity : AppCompatActivity() {
     private lateinit var browseSessionsCard: androidx.cardview.widget.CardView
 
     private lateinit var professorDirectoryCard: androidx.cardview.widget.CardView
-    private lateinit var logoutButton: android.widget.Button
+    private lateinit var logoutButton: android.widget.TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +61,8 @@ class StudentDashboardActivity : AppCompatActivity() {
         if (currentUser != null) {
             welcomeText.text = "Welcome, ${currentUser.name}!"
             userNameText.text = currentUser.name
+            val avatarInitialText = findViewById<android.widget.TextView>(R.id.avatarInitialText)
+            avatarInitialText.text = currentUser.name.first().uppercaseChar().toString()
         }
 
         // Find Tutors card click
