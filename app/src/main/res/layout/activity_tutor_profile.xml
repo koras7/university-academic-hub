@@ -72,9 +72,10 @@
                     android:letterSpacing="0.08" />
 
                 <TextView
+                    android:id="@+id/profileRatingSummary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.9 (124 reviews)"
+                    android:text="0.0 (0 reviews)"
                     android:textSize="12sp"
                     android:textColor="@color/white"
                     android:layout_marginStart="8dp" />
@@ -214,6 +215,23 @@
                 android:textColor="@color/text_primary"
                 android:background="@drawable/bg_yellow_button"
                 android:stateListAnimator="@null" />
+
+            <!-- Rate this Tutor Button -->
+            <TextView
+                android:id="@+id/rateButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Rate this Tutor"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:background="@drawable/bg_yellow_button"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                android:layout_marginTop="12dp" />
 
         </LinearLayout>
 

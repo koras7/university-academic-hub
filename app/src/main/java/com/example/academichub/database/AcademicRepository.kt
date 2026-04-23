@@ -11,6 +11,7 @@ class AcademicRepository(context: Context) {
     private val database = AppDatabase.getDatabase(context)
     private val tutorDao = database.tutorDao()
     private val sessionRequestDao = database.sessionRequestDao()
+    private val ratingDao = database.ratingDao()
 
     // TUTOR FUNCTIONS
     fun getAllTutors(): List<TutorProfile> {
@@ -120,5 +121,24 @@ class AcademicRepository(context: Context) {
                 request.copy(status = newStatus.name)
             )
         }
+    }
+
+    // RATING FUNCTIONS
+    fun insertRating(rating: RatingEntity) {
+        ratingDao.insertRating(rating)
+    }
+
+    fun getRatingsForTutor(tutorId: String): List<RatingEntity> {
+        return ratingDao.getRatingsForTutor(tutorId)
+    }
+
+    fun hasStudentRatedTutor(tutorId: String, studentId: String): Boolean {
+        return ratingDao.hasStudentRatedTutor(tutorId, studentId)
+    }
+
+    fun getAverageRatingForTutor(tutorId: String): Float {
+        val ratings = ratingDao.getRatingsForTutor(tutorId)
+        if (ratings.isEmpty()) return 0f
+        return ratings.map { it.rating }.average().toFloat()
     }
 }
