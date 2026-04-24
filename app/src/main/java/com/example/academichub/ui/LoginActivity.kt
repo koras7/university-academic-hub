@@ -70,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleLogin() {
+        // Passwords are hashed using SHA-256 before storage - never stored as plain text
         val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString()
 

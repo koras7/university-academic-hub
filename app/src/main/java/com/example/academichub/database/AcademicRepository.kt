@@ -5,6 +5,7 @@ import com.example.academichub.model.RequestStatus
 import com.example.academichub.model.SessionRequest
 import com.example.academichub.model.TutorProfile
 import com.example.academichub.model.TutorType
+import com.example.academichub.util.PasswordEncryption
 import java.util.UUID
 
 class AcademicRepository(context: Context) {
@@ -24,7 +25,7 @@ class AcademicRepository(context: Context) {
                 id = UUID.randomUUID().toString(),
                 name = name,
                 email = email,
-                password = password,
+                password = PasswordEncryption.hashPassword(password),
                 role = role
             )
         )
@@ -32,7 +33,8 @@ class AcademicRepository(context: Context) {
     }
 
     fun loginUser(email: String, password: String): UserEntity? {
-        return userDao.getUserByEmailAndPassword(email, password)
+        val user = userDao.getUserByEmail(email) ?: return null
+        return if (PasswordEncryption.verifyPassword(password, user.password)) user else null
     }
 
     fun getUserById(userId: String): UserEntity? {
