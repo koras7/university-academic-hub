@@ -1,11 +1,16 @@
 package com.example.academichub.ui.tutor
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +18,7 @@ import com.example.academichub.R
 import com.example.academichub.data.MockData
 import com.example.academichub.model.SessionRequest
 import com.example.academichub.ui.LoginActivity
+import com.example.academichub.util.NotificationHelper
 import com.example.academichub.viewmodel.TutorDashboardViewModel
 
 class TutorDashboardActivity : AppCompatActivity() {
@@ -70,6 +76,18 @@ class TutorDashboardActivity : AppCompatActivity() {
         observeViewModel()
 
         viewModel.loadRequests()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
+            }
+        }
     }
 
     private fun setupRequestsList() {
@@ -98,6 +116,7 @@ class TutorDashboardActivity : AppCompatActivity() {
 
     private fun handleAccept(request: SessionRequest) {
         viewModel.acceptRequest(request)
+        NotificationHelper.showRequestAcceptedNotification(this, request.tutorName, request.subject)
         android.widget.Toast.makeText(
             this,
             "Request from ${request.studentName} accepted!",
@@ -107,6 +126,7 @@ class TutorDashboardActivity : AppCompatActivity() {
 
     private fun handleReject(request: SessionRequest) {
         viewModel.rejectRequest(request)
+        NotificationHelper.showRequestRejectedNotification(this, request.tutorName, request.subject)
         android.widget.Toast.makeText(
             this,
             "Request from ${request.studentName} rejected.",

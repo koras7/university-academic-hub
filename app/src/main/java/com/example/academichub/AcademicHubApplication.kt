@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.academichub.data.MockData
 import com.example.academichub.database.AcademicRepository
 import com.example.academichub.model.UserRole
+import com.example.academichub.util.NotificationHelper
 
 class AcademicHubApplication : Application() {
 
@@ -11,6 +12,8 @@ class AcademicHubApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        NotificationHelper.createChannel(this)
 
         // Initialize repository
         repository = AcademicRepository(this)
