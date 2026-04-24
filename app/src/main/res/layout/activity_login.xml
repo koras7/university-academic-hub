@@ -23,21 +23,12 @@
             android:paddingStart="24dp"
             android:paddingEnd="24dp">
 
-            <!-- Yellow Logo Box -->
-            <FrameLayout
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:background="@drawable/bg_logo_yellow">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="AH"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/indigo_primary" />
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_logo_login"
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
