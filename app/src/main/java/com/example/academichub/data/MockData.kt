@@ -68,7 +68,7 @@ object MockData {
             courses = listOf("CS 3318", "CS 4350"),
             officeHours = "Tue, Thu 2-4 PM",
             location = "Science Building 204",
-            email = "robert.smith@university.edu"
+            email = "rsmith@university.edu"
         ),
         ProfessorInfo(
             id = "p2",
@@ -77,7 +77,7 @@ object MockData {
             courses = listOf("MATH 201", "MATH 301"),
             officeHours = "Mon, Wed 11 AM-1 PM",
             location = "Math Building 105",
-            email = "maria.garcia@university.edu"
+            email = "mgarcia@university.edu"
         ),
         ProfessorInfo(
             id = "p3",
@@ -86,7 +86,7 @@ object MockData {
             courses = listOf("PHYS 101", "PHYS 201"),
             officeHours = "Mon, Fri 3-5 PM",
             location = "Physics Lab 301",
-            email = "david.lee@university.edu"
+            email = "dlee@university.edu"
         )
     )
 

@@ -10,10 +10,34 @@ import java.util.UUID
 class AcademicRepository(context: Context) {
 
     private val database = AppDatabase.getDatabase(context)
+    private val userDao = database.userDao()
     private val tutorDao = database.tutorDao()
     private val sessionRequestDao = database.sessionRequestDao()
     private val ratingDao = database.ratingDao()
     private val favoriteDao = database.favoriteDao()
+
+    // USER / AUTH FUNCTIONS
+    fun registerUser(name: String, email: String, password: String, role: String): Boolean {
+        if (userDao.getUserByEmail(email) != null) return false
+        userDao.insertUser(
+            UserEntity(
+                id = UUID.randomUUID().toString(),
+                name = name,
+                email = email,
+                password = password,
+                role = role
+            )
+        )
+        return true
+    }
+
+    fun loginUser(email: String, password: String): UserEntity? {
+        return userDao.getUserByEmailAndPassword(email, password)
+    }
+
+    fun getUserById(userId: String): UserEntity? {
+        return userDao.getUserById(userId)
+    }
 
     // TUTOR FUNCTIONS
     fun getAllTutors(): List<TutorProfile> {

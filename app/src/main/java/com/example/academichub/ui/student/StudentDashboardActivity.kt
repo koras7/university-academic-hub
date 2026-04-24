@@ -1,5 +1,6 @@
 package com.example.academichub.ui.student
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -7,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.academichub.R
 import com.example.academichub.data.MockData
+import com.example.academichub.ui.LoginActivity
 import com.example.academichub.ui.professor.ProfessorDirectoryActivity
+import java.util.Calendar
 
 
 class StudentDashboardActivity : AppCompatActivity() {
@@ -58,16 +61,21 @@ class StudentDashboardActivity : AppCompatActivity() {
         logoutButton = findViewById(R.id.logoutButton)
 
         logoutButton.setOnClickListener {
-            val intent = Intent(this, com.example.academichub.ui.LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE)
+                .edit()
+                .remove(LoginActivity.KEY_SESSION_USER_ID)
+                .apply()
+            MockData.currentUser = null
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()
         }
 
-        // Show the logged in user's name
+        // Time-based greeting + logged-in user's name
+        welcomeText.text = greetingForCurrentHour()
         val currentUser = MockData.currentUser
         if (currentUser != null) {
-            welcomeText.text = "Welcome, ${currentUser.name}!"
             userNameText.text = currentUser.name
             val avatarInitialText = findViewById<android.widget.TextView>(R.id.avatarInitialText)
             avatarInitialText.text = currentUser.name.first().uppercaseChar().toString()
@@ -84,6 +92,15 @@ class StudentDashboardActivity : AppCompatActivity() {
         myRequestsCard.setOnClickListener {
             val intent = Intent(this, MyRequestsActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun greetingForCurrentHour(): String {
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        return when {
+            hour < 12 -> "GOOD MORNING"
+            hour < 18 -> "GOOD AFTERNOON"
+            else -> "GOOD EVENING"
         }
     }
 }

@@ -29,7 +29,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Student Dashboard -->
+        </activity> <!-- Sign Up Screen -->
+        <activity
+            android:name=".ui.SignUpActivity"
+            android:exported="false" /> <!-- Student Dashboard -->
         <activity
             android:name=".ui.student.StudentDashboardActivity"
             android:exported="false" /> <!-- Tutor List -->
@@ -50,6 +53,9 @@
             android:exported="false" /> <!-- Professor Directory -->
         <activity
             android:name=".ui.professor.ProfessorDirectoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.professor.ProfessorDetailActivity"
             android:exported="false" /> <!-- Main Activity -->
         <activity
             android:name=".MainActivity"

@@ -1,5 +1,6 @@
 package com.example.academichub.ui.tutor
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.academichub.R
 import com.example.academichub.data.MockData
 import com.example.academichub.model.SessionRequest
+import com.example.academichub.ui.LoginActivity
 import com.example.academichub.viewmodel.TutorDashboardViewModel
 
 class TutorDashboardActivity : AppCompatActivity() {
@@ -36,8 +38,13 @@ class TutorDashboardActivity : AppCompatActivity() {
         logoutButton = findViewById(R.id.logoutButton)
 
         logoutButton.setOnClickListener {
-            val intent = Intent(this, com.example.academichub.ui.LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            getSharedPreferences(LoginActivity.PREFS_NAME, Context.MODE_PRIVATE)
+                .edit()
+                .remove(LoginActivity.KEY_SESSION_USER_ID)
+                .apply()
+            MockData.currentUser = null
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish()
         }
