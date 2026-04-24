@@ -12,6 +12,7 @@ import com.example.academichub.R
 import com.example.academichub.data.MockData
 import com.example.academichub.model.User
 import com.example.academichub.model.UserRole
+import com.example.academichub.ui.professor.ProfessorDashboardActivity
 import com.example.academichub.ui.student.StudentDashboardActivity
 import com.example.academichub.ui.tutor.TutorDashboardActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -120,7 +121,7 @@ class LoginActivity : AppCompatActivity() {
             UserRole.STUDENT -> Intent(this, StudentDashboardActivity::class.java)
             UserRole.PEER_TUTOR -> Intent(this, TutorDashboardActivity::class.java)
             UserRole.UNIVERSITY_TUTOR -> Intent(this, TutorDashboardActivity::class.java)
-            UserRole.PROFESSOR -> Intent(this, StudentDashboardActivity::class.java)
+            UserRole.PROFESSOR -> Intent(this, ProfessorDashboardActivity::class.java)
         }
         startActivity(intent)
         finish()

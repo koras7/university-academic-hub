@@ -87,6 +87,15 @@ object MockData {
             officeHours = "Mon, Fri 3-5 PM",
             location = "Physics Lab 301",
             email = "dlee@university.edu"
+        ),
+        ProfessorInfo(
+            id = "p4",
+            name = "Test Professor",
+            department = "Computer Science",
+            courses = listOf("CS 3318", "CS 4412"),
+            officeHours = "Mon, Wed 2-4 PM",
+            location = "Science Building 101",
+            email = "prof@university.edu"
         )
     )
 
