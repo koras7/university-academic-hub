@@ -13,6 +13,9 @@ class TutorListViewModel : ViewModel() {
     private val _searchQuery = MutableLiveData("")
     val searchQuery: LiveData<String> = _searchQuery
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private val _tutors = MutableLiveData<List<TutorProfile>>(allTutors)
     val tutors: LiveData<List<TutorProfile>> = _tutors
 

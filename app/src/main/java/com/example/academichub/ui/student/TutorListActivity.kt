@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +21,7 @@ class TutorListActivity : AppCompatActivity() {
     private lateinit var tutorRecyclerView: RecyclerView
     private lateinit var tutorCountText: TextView
     private lateinit var searchInput: EditText
+    private lateinit var loadingIndicator: ProgressBar
     private lateinit var tutorAdapter: TutorAdapter
     private lateinit var viewModel: TutorListViewModel
 
@@ -30,6 +33,7 @@ class TutorListActivity : AppCompatActivity() {
         tutorRecyclerView = findViewById(R.id.tutorRecyclerView)
         tutorCountText = findViewById(R.id.tutorCountText)
         searchInput = findViewById(R.id.searchInput)
+        loadingIndicator = findViewById(R.id.loadingIndicator)
 
         viewModel = ViewModelProvider(this)[TutorListViewModel::class.java]
 
@@ -48,7 +52,11 @@ class TutorListActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        viewModel.isLoading.observe(this) { loading ->
+            loadingIndicator.visibility = if (loading) View.VISIBLE else View.GONE
+        }
         viewModel.tutors.observe(this) { tutors ->
+            loadingIndicator.visibility = View.GONE
             tutorCountText.text = "${tutors.size} tutors available"
             tutorAdapter.updateTutors(tutors)
         }

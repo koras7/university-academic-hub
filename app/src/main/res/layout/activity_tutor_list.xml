@@ -65,6 +65,16 @@
         </LinearLayout>
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/loadingIndicator"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/indigo_primary"
+        android:visibility="gone" />
+
     <!-- Tutor Count -->
     <TextView
         android:id="@+id/tutorCountText"

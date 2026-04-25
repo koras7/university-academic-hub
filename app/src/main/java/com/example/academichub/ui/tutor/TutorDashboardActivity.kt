@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,6 +27,7 @@ class TutorDashboardActivity : AppCompatActivity() {
     private lateinit var requestsRecyclerView: RecyclerView
     private lateinit var tutorNameText: TextView
     private lateinit var emptyStateText: TextView
+    private lateinit var loadingIndicator: ProgressBar
     private lateinit var requestAdapter: RequestAdapter
     private lateinit var logoutButton: android.widget.TextView
 
@@ -41,6 +43,7 @@ class TutorDashboardActivity : AppCompatActivity() {
         requestsRecyclerView = findViewById(R.id.requestsRecyclerView)
         tutorNameText = findViewById(R.id.tutorNameText)
         emptyStateText = findViewById(R.id.emptyStateText)
+        loadingIndicator = findViewById(R.id.loadingIndicator)
         logoutButton = findViewById(R.id.logoutButton)
 
         logoutButton.setOnClickListener {
@@ -102,7 +105,11 @@ class TutorDashboardActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        viewModel.isLoading.observe(this) { loading ->
+            loadingIndicator.visibility = if (loading) View.VISIBLE else View.GONE
+        }
         viewModel.requests.observe(this) { requests ->
+            loadingIndicator.visibility = View.GONE
             if (requests.isEmpty()) {
                 emptyStateText.visibility = View.VISIBLE
                 requestsRecyclerView.visibility = View.GONE

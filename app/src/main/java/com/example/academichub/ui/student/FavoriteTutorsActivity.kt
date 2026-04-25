@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ class FavoriteTutorsActivity : AppCompatActivity() {
 
     private lateinit var favoriteTutorsRecyclerView: RecyclerView
     private lateinit var emptyStateLayout: LinearLayout
+    private lateinit var loadingIndicator: ProgressBar
     private lateinit var tutorAdapter: TutorAdapter
     private lateinit var repository: AcademicRepository
 
@@ -31,6 +33,7 @@ class FavoriteTutorsActivity : AppCompatActivity() {
 
         favoriteTutorsRecyclerView = findViewById(R.id.favoriteTutorsRecyclerView)
         emptyStateLayout = findViewById(R.id.emptyStateLayout)
+        loadingIndicator = findViewById(R.id.loadingIndicator)
 
         repository = AcademicRepository(applicationContext)
 
@@ -48,9 +51,11 @@ class FavoriteTutorsActivity : AppCompatActivity() {
 
     private fun loadFavorites() {
         val currentUser = MockData.currentUser ?: return
+        loadingIndicator.visibility = View.VISIBLE
         executor.execute {
             val favorites = repository.getFavoriteTutors(currentUser.id)
             mainHandler.post {
+                loadingIndicator.visibility = View.GONE
                 tutorAdapter.updateTutors(favorites)
                 if (favorites.isEmpty()) {
                     emptyStateLayout.visibility = View.VISIBLE

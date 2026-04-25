@@ -16,24 +16,31 @@ class TutorDashboardViewModel(application: Application) : AndroidViewModel(appli
 
     private val repository = (application as AcademicHubApplication).repository
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     private val _requests = MutableLiveData<List<SessionRequest>>(emptyList())
     val requests: LiveData<List<SessionRequest>> = _requests
 
     fun loadRequests() {
+        _isLoading.value = true
         viewModelScope.launch {
             val data = withContext(Dispatchers.IO) {
                 repository.getAllSessionRequests()
             }
             _requests.value = data
+            _isLoading.value = false
         }
     }
 
     fun loadRequestsForTutor(tutorId: String) {
+        _isLoading.value = true
         viewModelScope.launch {
             val data = withContext(Dispatchers.IO) {
                 repository.getAllSessionRequests().filter { it.tutorId == tutorId }
             }
             _requests.value = data
+            _isLoading.value = false
         }
     }
 
